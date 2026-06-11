@@ -1,0 +1,99 @@
+/* --- THE MAIN BAR BACKGROUND --- */
+.cbar-bg {
+    background-color: #1e1e2e; /* Change the bar's main color here! */
+}
+
+/* Base styling for all modules */
+.cbar-module {
+    color: white;
+    padding: 6px 16px;
+    border-radius: 4px;
+    font-weight: bold;
+    font-family: "JetBrainsMono Nerd Font", "sans-serif";
+}
+
+/* Specific module colors */
+.mod-workspace { background-color: #e74c3c; }
+.mod-clock     { background-color: #3498db; }
+.mod-cpu       { background-color: #2ecc71; }
+.mod-battery   { background-color: #f1c40f; color: #1e1e2e; } 
+
+/* Drop Zone Highlight Guides */
+.drop-zone {
+    border: 2px dashed transparent;
+    border-radius: 6px;
+    transition: all 0.2s ease;
+    min-width: 60px;  
+    min-height: 32px; 
+}
+
+.drop-zone.highlight {
+    border: 2px dashed #ff4a4a;
+    background-color: rgba(255, 74, 74, 0.05);
+}
+
+/* The Flying Ghost Module */
+.ghost-module {
+    opacity: 0.85;
+    box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* --- STANDARD POPUP MENU STYLING --- */
+#popup-window {
+    background-color: transparent; 
+}
+
+.popup-content {
+    background-color: #1e1e2e;
+    border: 2px solid #313244;
+    border-top: none; /* Blends perfectly with the bar */
+    border-radius: 0px 0px 8px 8px; 
+    padding: 12px;
+    box-shadow: 0px 10px 20px rgba(0, 0, 0, 0.6);
+}
+
+.popup-title {
+    color: white;
+    font-weight: bold;
+    font-size: 14px;
+    margin-bottom: 8px;
+}
+
+.popup-button {
+    background-color: #313244;
+    color: white;
+    border-radius: 4px;
+    border: none;
+    padding: 6px;
+    margin-top: 4px;
+    transition: all 0.2s ease;
+}
+
+.popup-button:hover {
+    background-color: #45475a;
+}
+
+/* --- WORKSPACE POPUP STYLING --- */
+.workspace-popup-content {
+    background-color: rgba(30, 30, 46, 0.95); 
+    border: 2px solid #313244;
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.8);
+}
+
+
+/* Icons inside the mini-screen */
+.workspace-layout-container {
+    background-color: #181825;
+    border-radius: 8px;
+    padding: 10px;
+    border: 1px solid #45475a;
+}
+
+.mini-window {
+    background-color: #89b4fa;
+    border: 1px solid #cdd6f4;
+    border-radius: 2px;
+    padding: 2px;
+}

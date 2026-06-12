@@ -1,0 +1,10 @@
+.phantom {
+    background-color: transparent;
+}
+
+.cbar {
+    background-color: #1E1E2E;
+    border-top: 2px solid #cba6f7;
+    padding: 5px;
+    min-height: 15px;
+}

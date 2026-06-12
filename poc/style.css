@@ -9,7 +9,7 @@
     padding: 6px 16px;
     border-radius: 4px;
     font-weight: bold;
-    font-family: "JetBrainsMono Nerd Font", "sans-serif";
+    font-family: "3270 Nerd Font", "sans-serif";
 }
 
 /* Specific module colors */
@@ -71,7 +71,7 @@
 
 .popup-button:hover {
     background-color: #45475a;
-}
+}f
 
 /* --- WORKSPACE POPUP STYLING --- */
 .workspace-popup-content {

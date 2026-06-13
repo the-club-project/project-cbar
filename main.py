@@ -15,11 +15,14 @@ class Cbar(Gtk.Window):
         
         GLS.init_for_window(self)
         GLS.set_layer(self, GLS.Layer.TOP)
-        for edge in [GLS.Edge.BOTTOM, GLS.Edge.LEFT, GLS.Edge.RIGHT]:
+        for edge in [GLS.Edge.TOP, GLS.Edge.LEFT, GLS.Edge.RIGHT]:
             GLS.set_anchor(self, edge, True)
         GLS.auto_exclusive_zone_enable(self)
         self.set_app_paintable(True)
         self.load_css()
+
+        self.active_popup = None
+        self.active_module = None
 
         self.phantom_box = Gtk.Box()
         self.phantom_box.get_style_context().add_class('phantom')
@@ -55,10 +58,21 @@ class Cbar(Gtk.Window):
         self.test1.update_label(label='time')
         self.center_box.pack_start(self.test1, False, False, 0)
 
-
         self.test2 = CModule(self)
         self.test2.update_label(label='battery')
         self.right_box.pack_start(self.test2, False, False, 0)
+
+        self.test3 = CModule(self)
+        self.test3.update_label(label='hyprland')
+        self.left_box.pack_start(self.test3, False, False, 0)
+
+        self.test4 = CModule(self)
+        self.test4.update_label(label='user')
+        self.left_box.pack_start(self.test4, False, False, 0)
+
+        self.test5 = CModule(self)
+        self.test5.update_label(label='power')
+        self.right_box.pack_start(self.test5, False, False, 0)
 
         self.show_all()
 
@@ -70,6 +84,12 @@ class Cbar(Gtk.Window):
             Gtk.StyleContext.add_provider_for_screen(Gdk.Screen.get_default(), provider, Gtk.STYLE_PROVIDER_PRIORITY_USER)
         else:
             print(f"No {path} exists")
+
+    def close_popup(self):
+        if self.active_popup:
+            self.active_popup.slide_in()
+            self.active_popup = None
+            self.active_module = None
 
 if __name__ == "__main__":
     win = Cbar()

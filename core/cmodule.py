@@ -5,6 +5,7 @@ gi.require_version('Gtk', '3.0')
 gi.require_version('GtkLayerShell', '0.1')
 
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
+from core.cpopup import CPopup
 
 class CModule(Gtk.EventBox):
     def __init__(self, root = "", module_name = "", css_class = ""):
@@ -17,6 +18,7 @@ class CModule(Gtk.EventBox):
         self.drag_threshold = 5
         self.label = Gtk.Label()
         self.add(self.label)
+        self.builder = self.build_popup
 
         # States
         self.is_pressed = False
@@ -31,6 +33,19 @@ class CModule(Gtk.EventBox):
         self.connect('button-press-event', self.on_button_press)
         self.connect('button-release-event', self.on_button_release)
         self.connect('motion-notify-event', self.on_motion_notify)
+
+    def build_popup(self):
+        popup_w, popup_h = 250, -1
+        content = Gtk.Box(orientation=Gtk.Orientation.VERTICAL, spacing=5)
+        content.get_style_context().add_class("popup-box")
+        content.set_size_request(popup_w, popup_h)
+        title = Gtk.Label(label=f"Settings")
+        content.pack_start(title, False, False, 0)
+        for label in ["Action 1", "Close"]:
+            btn = Gtk.Button(label=label)
+            btn.connect("clicked", lambda w: self.cbar.close_popup())
+            content.pack_start(btn, False, False, 0)
+        return content
 
     def update_label(self, label):
         self.label.set_text(label)
@@ -49,6 +64,7 @@ class CModule(Gtk.EventBox):
             if distance > self.drag_threshold:
                 self.is_dragged = True
                 self.set_opacity(0)
+                self.cbar.close_popup()
                 for box in [self.cbar.left_box, self.cbar.center_box, self.cbar.right_box]:
                     box.get_style_context().add_class('module-highlight')
                 self.afterimage = Gtk.EventBox()
@@ -75,6 +91,32 @@ class CModule(Gtk.EventBox):
         if event.button != 1 or not self.is_pressed: return False
         self.is_pressed = False
         self.set_opacity(1.0)
+        if not self.is_dragged:
+            if self.cbar.active_module == self:
+                self.cbar.close_popup()
+            else:
+                self.cbar.close_popup()
+                coordinates = self.translate_coordinates(self.cbar, 0, 0)
+                abs_x = coordinates[0] if coordinates else 0
+                mod_w = self.get_allocated_width()
+                win_w = self.cbar.get_allocated_width()
+                popup_w = 250
+                if self.get_parent() == self.cbar.center_box:
+                    anchor = "center"
+                    margin = abs_x + (mod_w / 2) - (popup_w / 2)
+                elif (abs_x + popup_w) <= win_w:
+                    anchor = "left"
+                    margin = abs_x
+                else:
+                    anchor = "right"
+                    margin = (win_w - (abs_x + mod_w))
+
+                new_popup = CPopup(builder=self.builder, anchor=anchor, margin=margin)
+
+                self.cbar.active_popup = new_popup
+                self.cbar.active_module = self
+            return True
+
         self.is_dragged = False
         for box in [self.cbar.left_box, self.cbar.center_box, self.cbar.right_box]:
             box.get_style_context().remove_class('module-highlight')

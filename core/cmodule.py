@@ -6,7 +6,6 @@ gi.require_version('GtkLayerShell', '0.1')
 
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
 
-
 class CModule(Gtk.EventBox):
     def __init__(self, root):
         super().__init__()
@@ -30,9 +29,9 @@ class CModule(Gtk.EventBox):
         self.connect('motion-notify-event', self.on_motion_notify)
 
     def on_button_press(self, widget, event):
-        print('button is Pressed')
         if event.button == 1:
             self.is_pressed = True
+            print('button is Pressed')
             self.start_x = event.x
             self.start_y = event.y
         return True
@@ -63,4 +62,40 @@ class CModule(Gtk.EventBox):
         return True
 
     def on_button_release(self, widget, event):
-        pass
+        if event.button != 1 or not self.is_pressed: return False
+        self.is_pressed = False
+        self.is_dragged = False
+        for box in [self.cbar.left_box, self.cbar.center_box, self.cbar.right_box]:
+            pass
+        if self.afterimage:
+            self.afterimage.destroy()
+            self.afterimage = None
+        coordinates = self.translate_coordinates(self.cbar.phantom_box, event.x, event.y)
+        if not coordinates: return True
+        win_x, _ = coordinates
+        win_w = self.cbar.get_allocated_width()
+        third = win_w / 3
+        if win_x < third:
+            target = self.cbar.left_box
+        elif win_x > (third * 2):
+            target = self.cbar.right_box
+        else:
+            target = self.cbar.center_box
+        children = target.get_children()
+        new_idx = len(children)
+        for i, child in enumerate(children):
+            if child == self:
+                continue
+            child_mid = child.translate_coordinates(self.cbar.phantom_box, 0, 0)[0] + (child.get_allocated_width() / 2)
+            if win_x < child_mid:
+                new_idx = i
+                break
+        if target != self.get_parent():
+            self.get_parent().remove(self)
+            target.pack_start(self, False, 0, 0)
+            target.reorder_child(self, new_idx)
+        else:
+            target.reorder_child(self, new_idx)
+        print("button is Downed")
+        self.show_all()
+        return True

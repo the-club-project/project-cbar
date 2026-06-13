@@ -38,8 +38,11 @@ class Cbar(Gtk.Window):
         self.overlay.set_overlay_pass_through(self.drag_layer, True)
 
         self.left_box = Gtk.Box(halign=Gtk.Align.START, spacing=10)
+        self.left_box.get_style_context().add_class("left-box")
         self.center_box = Gtk.Box(halign=Gtk.Align.CENTER, spacing=10)
+        self.center_box.get_style_context().add_class("center-box")
         self.right_box = Gtk.Box(halign=Gtk.Align.END, spacing=10)
+        self.right_box.get_style_context().add_class("right-box")
 
         for box in [self.left_box, self.center_box, self.right_box]:
             box.get_style_context().add_class("boxes")

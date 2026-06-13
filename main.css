@@ -9,9 +9,14 @@
     padding: 5px;
 }
 
+.cmodule {
+    font-weight: bold;
+    padding: 2px;
+}
+
 .boxes {
     transition: all 0.2s ease;
-    min-width: 60px;
+    min-width: 45px;
     border-radius: 10px;
 }
 

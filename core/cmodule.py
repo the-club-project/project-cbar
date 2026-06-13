@@ -7,14 +7,16 @@ gi.require_version('GtkLayerShell', '0.1')
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
 
 class CModule(Gtk.EventBox):
-    def __init__(self, root, module_name = ''):
+    def __init__(self, root = "", module_name = "", css_class = ""):
         super().__init__()
         self.cbar = root
+        self.module_name = module_name
+        self.get_style_context().add_class('cmodule')
+        self.get_style_context().add_class(css_class)
         self.afterimage = None
         self.drag_threshold = 5
         self.label = Gtk.Label()
         self.add(self.label)
-        self.module_name = module_name
 
         # States
         self.is_pressed = False

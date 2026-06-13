@@ -5,6 +5,16 @@
 .cbar {
     background-color: #1E1E2E;
     border-top: 2px solid #cba6f7;
+    min-height: 25px;
     padding: 5px;
-    min-height: 15px;
+}
+
+.boxes {
+    transition: all 0.2s ease;
+    min-width: 60px;
+    border-radius: 10px;
+}
+
+.boxes.module-highlight {
+    border: 1px dashed #cba6f7;
 }

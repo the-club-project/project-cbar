@@ -42,12 +42,20 @@ class Cbar(Gtk.Window):
         self.right_box = Gtk.Box(halign=Gtk.Align.END, spacing=10)
 
         for box in [self.left_box, self.center_box, self.right_box]:
+            box.get_style_context().add_class("boxes")
             self.main_box.pack_start(box, True, True, 10)
-        
-        self.text = Gtk.Label(label='cbar')
         self.test = CModule(self)
-        self.test.add(self.text)
-        self.center_box.pack_start(self.test, False, False, 0)
+        self.test.update_label(label='cbar')
+        self.left_box.pack_start(self.test, False, False, 0)
+
+        self.test1 = CModule(self)
+        self.test1.update_label(label='time')
+        self.center_box.pack_start(self.test1, False, False, 0)
+
+
+        self.test2 = CModule(self)
+        self.test2.update_label(label='battery')
+        self.right_box.pack_start(self.test2, False, False, 0)
 
         self.show_all()
 

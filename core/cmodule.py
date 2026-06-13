@@ -7,12 +7,14 @@ gi.require_version('GtkLayerShell', '0.1')
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
 
 class CModule(Gtk.EventBox):
-    def __init__(self, root):
+    def __init__(self, root, module_name = ''):
         super().__init__()
         self.cbar = root
         self.afterimage = None
         self.drag_threshold = 5
-        self.label = None
+        self.label = Gtk.Label()
+        self.add(self.label)
+        self.module_name = module_name
 
         # States
         self.is_pressed = False
@@ -28,22 +30,28 @@ class CModule(Gtk.EventBox):
         self.connect('button-release-event', self.on_button_release)
         self.connect('motion-notify-event', self.on_motion_notify)
 
+    def update_label(self, label):
+        self.label.set_text(label)
+
     def on_button_press(self, widget, event):
         if event.button == 1:
             self.is_pressed = True
-            print('button is Pressed')
             self.start_x = event.x
             self.start_y = event.y
         return True
 
     def on_motion_notify(self, widget, event):
-        print('button is Dragged')
         if not self.is_pressed: return False
         if not self.is_dragged:
             distance = math.hypot(event.x - self.start_x, event.y - self.start_y)
             if distance > self.drag_threshold:
                 self.is_dragged = True
+                self.set_opacity(0)
+                for box in [self.cbar.left_box, self.cbar.center_box, self.cbar.right_box]:
+                    box.get_style_context().add_class('module-highlight')
                 self.afterimage = Gtk.EventBox()
+                self.afterimage_text = Gtk.Label(f'{self.label.get_label()}')
+                self.afterimage.add(self.afterimage_text)
                 coordinates = self.translate_coordinates(self.cbar.phantom_box, 0, 0)
                 if coordinates:
                     mod_x, mod_y = coordinates
@@ -64,9 +72,10 @@ class CModule(Gtk.EventBox):
     def on_button_release(self, widget, event):
         if event.button != 1 or not self.is_pressed: return False
         self.is_pressed = False
+        self.set_opacity(1.0)
         self.is_dragged = False
         for box in [self.cbar.left_box, self.cbar.center_box, self.cbar.right_box]:
-            pass
+            box.get_style_context().remove_class('module-highlight')
         if self.afterimage:
             self.afterimage.destroy()
             self.afterimage = None
@@ -96,6 +105,5 @@ class CModule(Gtk.EventBox):
             target.reorder_child(self, new_idx)
         else:
             target.reorder_child(self, new_idx)
-        print("button is Downed")
         self.show_all()
         return True

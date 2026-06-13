@@ -192,7 +192,7 @@ class CbarModule(Gtk.EventBox):
         if self.ghost:
             coords = self.translate_coordinates(self.cbar_root.bg_box, event.x, event.y)
             if coords:
-                win_x, win_y = coords
+                win_x, _ = coords
                 new_x = win_x - self.press_x
                 mod_coords = self.translate_coordinates(self.cbar_root.bg_box, 0, 0)
                 if mod_coords:

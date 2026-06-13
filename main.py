@@ -5,6 +5,8 @@ gi.require_version("Gtk", "3.0")
 gi.require_version("GtkLayerShell", "0.1")
 
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
+from core.cmodule import CModule
+
 
 
 class Cbar(Gtk.Window):
@@ -43,7 +45,9 @@ class Cbar(Gtk.Window):
             self.main_box.pack_start(box, True, True, 10)
         
         self.text = Gtk.Label(label='cbar')
-        self.center_box.add(self.text)
+        self.test = CModule(self)
+        self.test.add(self.text)
+        self.center_box.pack_start(self.test, False, False, 0)
 
         self.show_all()
 

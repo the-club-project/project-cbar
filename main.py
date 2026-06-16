@@ -6,6 +6,7 @@ gi.require_version("GtkLayerShell", "0.1")
 
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
 from core.cmodule import CModule
+from modules.clock import ClockMod
 
 
 
@@ -50,29 +51,25 @@ class Cbar(Gtk.Window):
         for box in [self.left_box, self.center_box, self.right_box]:
             box.get_style_context().add_class("boxes")
             self.main_box.pack_start(box, True, True, 10)
-        self.test = CModule(self)
-        self.test.update_label(label='cbar')
-        self.left_box.pack_start(self.test, False, False, 0)
 
-        self.test1 = CModule(self)
-        self.test1.update_label(label='time')
-        self.center_box.pack_start(self.test1, False, False, 0)
+        self.test1 = ClockMod(self)
+        self.right_box.pack_start(self.test1, False, False, 0)
 
         self.test2 = CModule(self)
         self.test2.update_label(label='battery')
         self.right_box.pack_start(self.test2, False, False, 0)
 
+        self.test = CModule(self)
+        self.test.update_label(label='cbar')
+        self.right_box.pack_start(self.test, False, False, 0)
+
         self.test3 = CModule(self)
         self.test3.update_label(label='hyprland')
-        self.left_box.pack_start(self.test3, False, False, 0)
+        self.center_box.pack_start(self.test3, False, False, 0)
 
         self.test4 = CModule(self)
         self.test4.update_label(label='user')
         self.left_box.pack_start(self.test4, False, False, 0)
-
-        self.test5 = CModule(self)
-        self.test5.update_label(label='power')
-        self.right_box.pack_start(self.test5, False, False, 0)
 
         self.show_all()
 

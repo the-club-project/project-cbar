@@ -17,6 +17,7 @@ class CModule(Gtk.EventBox):
         self.afterimage = None
         self.drag_threshold = 5
         self.label = Gtk.Label()
+        self.label.get_style_context().add_class('cmodule-label')
         self.add(self.label)
         self.builder = self.build_popup
 

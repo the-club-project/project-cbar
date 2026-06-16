@@ -16,13 +16,19 @@
     border-left: 2px solid #cba6f7;
     border-bottom-left-radius: 15px;
     border-bottom-right-radius: 15px;
-    padding: 10px;
+    padding: 5px;
 }
 
 .cmodule {
     font-weight: bold;
-    padding: 2px;
+    border-radius: 10px
 }
+
+.cmodule-label {
+    font-size: 16px;
+    padding: 5px;
+}
+
 
 .boxes {
     transition: all 0.2s ease;
@@ -32,4 +38,27 @@
 
 .boxes.module-highlight {
     border: 1px dashed #cba6f7;
+}
+
+
+.calendar {
+    background-color: transparent;
+    margin: 0px;
+    border: none
+}
+
+.calendar :selected {
+    background-color: #cba6f7;
+}
+
+.calendar .highlight {
+    color: #cba6f7;
+    font-weight: bold;
+}
+
+.calendar-header {
+    padding-left: 10px;
+    color: #cba6f7;
+    font-weight: bold;
+    font-size: 18px;
 }

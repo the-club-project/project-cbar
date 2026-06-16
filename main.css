@@ -62,3 +62,18 @@
     font-weight: bold;
     font-size: 18px;
 }
+
+.notes-box {
+    padding-bottom: 5px;
+}
+
+.notes-header {
+    padding-left: 10px;
+    color: #cba6f7;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.notes {
+    font-size: 14px;
+}

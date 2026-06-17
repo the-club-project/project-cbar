@@ -1,4 +1,26 @@
 .battery-icon {
     font-size: 42px;
-    margin: 10px;
+    color: #cba6f7;
+}
+
+.battery-percent {
+    font-size: 24px;
+    color: #cba6f7;
+}
+
+.battery-info {
+    font-size: 22px;
+    font-weight: bold;
+    color: #cba6f7;
+}
+
+.battery-stats {
+    font-size: 16px;
+}
+.battery-watts {
+    font-size: 16px;
+}
+
+.battery-health {
+    font-size: 16px;
 }

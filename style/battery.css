@@ -1,27 +1,50 @@
 .battery-icon {
-    font-size: 42px;
-    color: #cba6f7;
+    font-size: 36px;
+    font-weight: bold;
 }
 
 .battery-percent {
     font-size: 22px;
-    color: #cba6f7;
     font-weight: bold;
 }
 
 .battery-info {
-    font-size: 22px;
+    font-size: 16px;
     font-weight: bold;
     color: #cba6f7;
 }
 
 .battery-stats {
-    font-size: 16px;
+    font-size: 14px;
 }
 .battery-watts {
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .battery-health {
-    font-size: 16px;
+    font-size: 14px;
+}
+
+.battery-time {
+    font-size: 14px;
+}
+
+.state-ac {
+    color: #a6e3a1;
+}
+
+.state-charging {
+    color: #a6e3a1;
+}
+
+.state-dis {
+    color: #cba6f7;
+}
+
+.state-full {
+    color: #a6e3a1;
+}
+
+.state-low {
+    color: #f38ba8;
 }

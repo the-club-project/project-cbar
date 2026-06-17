@@ -1,13 +1,15 @@
 import gi
 import os
+import threading
 
 gi.require_version("Gtk", "3.0")
 gi.require_version("GtkLayerShell", "0.1")
 
 from gi.repository import Gtk, Gdk, GLib, GtkLayerShell as GLS
+from core import clio
 from core.cmodule import CModule
 from modules.clock import ClockMod
-
+from modules.battery import BatteryMod
 
 
 class Cbar(Gtk.Window):
@@ -52,12 +54,11 @@ class Cbar(Gtk.Window):
             box.get_style_context().add_class("boxes")
             self.main_box.pack_start(box, True, True, 10)
 
-        self.test1 = ClockMod(self)
-        self.right_box.pack_start(self.test1, False, False, 0)
+        self.clock = ClockMod(self)
+        self.right_box.pack_start(self.clock, False, False, 0)
 
-        self.test2 = CModule(self)
-        self.test2.update_label(label='battery')
-        self.right_box.pack_start(self.test2, False, False, 0)
+        self.battery = BatteryMod(self)
+        self.right_box.pack_start(self.battery, False, False, 0)
 
         self.test = CModule(self)
         self.test.update_label(label='cbar')
@@ -71,10 +72,18 @@ class Cbar(Gtk.Window):
         self.test4.update_label(label='user')
         self.left_box.pack_start(self.test4, False, False, 0)
 
+        threading.Thread(target=self.clio_listener, daemon=True).start()
+
         self.show_all()
 
+    def clio_listener(self):
+        while True:
+            clio_data = clio.get_info()
+            GLib.idle_add(self.battery.update_from_clio, clio_data)
+
+
     def load_css(self):
-        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "main.css")
+        path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "style", "main.css")
         if os.path.exists(path):
             provider = Gtk.CssProvider()
             provider.load_from_path(path)

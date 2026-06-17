@@ -1,0 +1,36 @@
+.calendar {
+    background-color: transparent;
+    margin: 0px;
+    border: none
+}
+
+.calendar :selected {
+    background-color: #cba6f7;
+}
+
+.calendar .highlight {
+    color: #cba6f7;
+    font-weight: bold;
+}
+
+.calendar-header {
+    padding-left: 10px;
+    color: #cba6f7;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.notes-box {
+    padding-bottom: 5px;
+}
+
+.notes-header {
+    padding-left: 10px;
+    color: #cba6f7;
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.notes {
+    font-size: 14px;
+}

@@ -4,8 +4,9 @@
 }
 
 .battery-percent {
-    font-size: 24px;
+    font-size: 22px;
     color: #cba6f7;
+    font-weight: bold;
 }
 
 .battery-info {

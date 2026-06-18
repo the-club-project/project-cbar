@@ -10,6 +10,7 @@ from core import clio
 from core.cmodule import CModule
 from modules.clock import ClockMod
 from modules.battery import BatteryMod
+from modules.bluetooth import BluetoothMod
 
 
 class Cbar(Gtk.Window):
@@ -79,6 +80,7 @@ class Cbar(Gtk.Window):
     def clio_listener(self):
         while True:
             clio_data = clio.get_info()
+            print(clio_data)
             GLib.idle_add(self.battery.update_from_clio, clio_data)
 
 

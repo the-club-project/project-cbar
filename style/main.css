@@ -1,5 +1,6 @@
 @import url("clock.css");
 @import url("battery.css");
+@import url("bluetooth.css");
 
 .phantom {
     background-color: transparent;

@@ -83,8 +83,8 @@ class Cbar(Gtk.Window):
     def clio_listener(self):
         while True:
             clio_data = clio.get_info()
-            print(clio_data)
             GLib.idle_add(self.battery.update_from_clio, clio_data)
+            GLib.idle_add(self.bluetooth.update_from_clio, clio_data)
 
 
     def load_css(self):

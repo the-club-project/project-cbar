@@ -33,7 +33,7 @@ class BatteryMod(CModule):
         self.popup_time = Gtk.Label()
         self.popup_time.get_style_context().add_class('battery-time')
 
-        self.update_label("󰂃 0%")
+        self.update_label("󰂃 ?%")
 
     def compute_battery_health(self, full, design):
         health = (int(full) * 100) / int(design)

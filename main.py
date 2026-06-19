@@ -61,6 +61,9 @@ class Cbar(Gtk.Window):
         self.battery = BatteryMod(self)
         self.right_box.pack_start(self.battery, False, False, 0)
 
+        self.bluetooth = BluetoothMod(self)
+        self.right_box.pack_start(self.bluetooth, False, False, 0)
+
         self.test = CModule(self)
         self.test.update_label(label='cbar')
         self.right_box.pack_start(self.test, False, False, 0)

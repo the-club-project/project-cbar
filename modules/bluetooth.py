@@ -27,7 +27,7 @@ class BluetoothMod(CModule):
         content.get_style_context().add_class("popup-box")
         content.set_size_request(popup_w, popup_h)
 
-        title = Gtk.Label(label="Bluetooth", halign=Gtk.Align.START)
+        title = Gtk.Label(label="󰂯 Bluetooth", halign=Gtk.Align.START)
         title.get_style_context().add_class("title")
 
         switch = Gtk.Switch()
@@ -72,7 +72,6 @@ class BluetoothMod(CModule):
         out = ""
         self.bluetooth_data = data['bluetooth']
         self.powered = self.bluetooth_data['powered']
-        print(self.bluetooth_data)
         if self.bluetooth_data['powered'] and not self.bluetooth_data['connected']:
             cls = "on-bt"
             out = "On"
@@ -88,10 +87,55 @@ class BluetoothMod(CModule):
         
         if cls:
             context.add_class(cls)
+        
         self.update_label(f"󰂯 {out}")
-
         self.popup_show_n_hide(True)
 
+        if self.device_list is not None:
+            scan_device = self.bluetooth_data['scan_results']
+            current = self.device_list.get_children()
+            num_devices = len(scan_device) if self.powered else 0
+
+            for id, item in enumerate(scan_device):
+                if item['name'] == self.bluetooth_data['device_name']:
+                    connected = scan_device.pop(id)
+                    scan_device.insert(0, connected)
+
+            for i in range(max(len(current), num_devices)):
+                if i < num_devices:
+                    device = scan_device[i]
+                    dev_name = device["name"]
+                    dev_mac = device["mac"]
+
+                    if i < len(current):
+                        btn = current[i]
+                        box = btn.get_child()
+                        label = box.get_children()
+
+                        label[0].set_text(dev_name)
+                        label[1].set_text(f"MAC: {dev_mac}")
+                        btn.show()
+                    else:
+                        box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
+                        box.get_style_context().add_class("device-button")
+                        dev = Gtk.Label(label=f"{device["name"]}", halign=Gtk.Align.START)
+                        dev.get_style_context().add_class("device-name")
+                        mac = Gtk.Label(label=f"MAC: {device["mac"]}", halign=Gtk.Align.START)
+                        mac.get_style_context().add_class("device-mac")
+                        box.pack_start(dev, False, False, 0)
+                        box.pack_start(mac, False, False, 0)
+
+                        button = Gtk.Button()
+                        button.add(box)
+                        
+                        button.connect("clicked", self.connect_device, dev_name)
+
+                        self.device_list.pack_start(button, False, False, 0)
+                        button.show_all()
+                else:
+                    if i < len(current):
+                        current[i].hide()
+        
         return False
     
     def popup_show_n_hide(self, conf):
@@ -113,3 +157,6 @@ class BluetoothMod(CModule):
         print("Button is clicked")
         reply = send_cmd({"msg":"ILOVEYOUUU BABII"})
         print(reply)
+
+    def connect_device(self, _, name):
+        print(f"{name} connecting")

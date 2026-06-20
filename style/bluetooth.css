@@ -20,6 +20,18 @@
     color: #11111b
 }
 
+.device-button {
+    background-color: transparent;
+}
+
+.device-name {
+    font-weight: bold;
+}
+
+.device-mac {
+    font-size: 12px;
+}
+
 .on-bt {
     color: #89B4FA;
 }

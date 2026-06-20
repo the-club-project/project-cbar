@@ -117,7 +117,6 @@ class BluetoothMod(CModule):
                         btn.show()
                     else:
                         box = Gtk.Box(orientation=Gtk.Orientation.VERTICAL)
-                        box.get_style_context().add_class("device-button")
                         dev = Gtk.Label(label=f"{device["name"]}", halign=Gtk.Align.START)
                         dev.get_style_context().add_class("device-name")
                         mac = Gtk.Label(label=f"MAC: {device["mac"]}", halign=Gtk.Align.START)
@@ -127,7 +126,7 @@ class BluetoothMod(CModule):
 
                         button = Gtk.Button()
                         button.add(box)
-                        
+                        button.get_style_context().add_class("device-button")
                         button.connect("clicked", self.connect_device, dev_name)
 
                         self.device_list.pack_start(button, False, False, 0)

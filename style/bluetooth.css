@@ -24,6 +24,10 @@
     background-color: #1E1E2E;
 }
 
+.active-button {
+    background-color: #313244;
+}
+
 .device-name {
     font-weight: bold;
 }

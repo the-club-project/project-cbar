@@ -2,7 +2,7 @@ import gi
 
 gi.require_version("Gtk", "3.0")
 
-from gi.repository import Gtk
+from gi.repository import Gtk, GLib
 from core.cmodule import CModule
 from core.clio import send_cmd
 
@@ -50,7 +50,7 @@ class BluetoothMod(CModule):
         self.scroll_area.add(self.device_list)
 
         self.button = Gtk.Button(label="Scan", halign=Gtk.Align.CENTER)
-        self.button.connect("clicked", self.send_command)
+        self.button.connect("clicked", self.scan_devices)
         self.button.get_style_context().add_class("scan-button")
 
 
@@ -152,10 +152,18 @@ class BluetoothMod(CModule):
                 self.button.hide()
                 self.note.show()
 
-    def send_command(self, _):
-        print("Button is clicked")
-        reply = send_cmd({"msg":"ILOVEYOUUU BABII"})
-        print(reply)
+    def scan_devices(self, button):
+        button.set_sensitive(False)
+        button.set_label("Scanning...")
+        button.get_style_context().add_class("active-button")
+        reply = send_cmd({"sender":self.module_name, "action":"scan"})
+        GLib.timeout_add_seconds(10, self.default_scan, button)
+
+    def default_scan(self, button):
+        button.set_sensitive(True)
+        button.set_label("Scan")
+        button.get_style_context().remove_class("active-button")
+        return False
 
     def connect_device(self, _, name):
         print(f"{name} connecting")

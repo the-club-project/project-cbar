@@ -20,4 +20,4 @@ def send_cmd(action):
     payload = json.dumps(action)
     res.send_string(payload)
     reply = res.recv_string()
-    return reply
+    print(reply)

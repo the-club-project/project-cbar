@@ -36,6 +36,10 @@
     font-size: 12px;
 }
 
+.device-connected {
+    color: #89b4fa;
+}
+
 .on-bt {
     color: #89B4FA;
 }
